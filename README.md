@@ -8,5 +8,5 @@
 ```terraform apply -target=aws_cloudwatch_log_group.sns-log -target=aws_iam_role.sns-log-role -target=aws_iam_role_policy.sns-log-policy -target=aws_s3_bucket.sns-log-bucket -target=null_resource.sns-package-awsevent -target=null_resource.sns-monitor-awsevent```
 
 ### lambda function for process log data
-```terraform apply -target=aws_cloudwatch_log_group.cw-monitor -target=aws_iam_role.cw-monitor-role -target=aws_iam_role_policy.cw-monitor-policy -target=aws_s3_bucket.cw-monitor-bucket -target=null_resource.cw-monitor-package-awsevent -target=null_resource.cw-monitor-awsevent```
+```terraform apply -target=aws_iam_role.cw-monitor-role -target=aws_iam_role_policy.cw-monitor-policy -target=aws_s3_bucket.cw-monitor-bucket -target=null_resource.cw-monitor-package-awsevent -target=null_resource.cw-monitor-awsevent```
 
