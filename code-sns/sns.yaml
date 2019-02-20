@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An lambda trigger that logs the message pushed to the SNS topic.
+Resources:
+  SNSmessageLog:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: awsevent-function
+      Handler: index.handler
+      Runtime: nodejs8.10
+      CodeUri: .
+      Description: An lambda trigger that logs the message pushed to the SNS topic.
+      MemorySize: 128
+      Timeout: 3
+      Role: '${monitor_role}'
+      Events:
+        SNS1:
+          Type: SNS
+          Properties:
+            Topic: ${sns_topic_1}
+      Tags:
+        'lambda-awsevent': sns-log demo
+  SNSTopic1:
+    Type: 'AWS::SNS::Topic'
