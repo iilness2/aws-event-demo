@@ -68,7 +68,7 @@ resource "aws_sns_topic_policy" "awsevent-sns-policy" {
       "Resource": "${aws_sns_topic.awsevent-sns.arn}",
       "Condition": {
         "StringEquals": {
-          "AWS:SourceOwner": "457036678279"
+          "AWS:SourceOwner": "*"
         }
       }
     },
@@ -134,7 +134,7 @@ resource "aws_iam_role_policy" "sns-log-policy" {
         {
             "Effect": "Allow",
             "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:ap-southeast-1:457036678279:*"
+            "Resource": "arn:aws:logs:ap-southeast-1:*:*"
         },
         {
             "Effect": "Allow",
@@ -144,7 +144,7 @@ resource "aws_iam_role_policy" "sns-log-policy" {
 		"logs:*"
             ],
             "Resource": [
-                "arn:aws:logs:ap-southeast-1:457036678279:log-group:${aws_cloudwatch_log_group.sns-log.name}:*"
+                "arn:aws:logs:ap-southeast-1:*:log-group:${aws_cloudwatch_log_group.sns-log.name}:*"
             ]
         }
     ]
@@ -186,19 +186,7 @@ resource "null_resource" "sns-monitor-awsevent" {
   ]
 }
 
-resource "aws_lambda_permission" "lambda_with_sns" {
-  statement_id  = "AllowExecutionFromSNS"
-  action        = "lambda:InvokeFunction"
-  function_name = "awsevent-function"
-  principal     = "sns.amazonaws.com"
-  source_arn    = "${aws_sns_topic.awsevent-sns.arn}"
-}
-
 # create lambda for monitoring
-resource "aws_cloudwatch_log_group" "cw-monitor" {
-  name = "/aws/clodwatch-monitor"
-}
-
 resource "aws_iam_role" "cw-monitor-role" {
   name = "cw-monitor-role"
 
